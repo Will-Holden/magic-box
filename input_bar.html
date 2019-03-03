@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <style type="text/css">
+  [role=form-inline] .form-group{
+      height:100%;
+      width: 80%;
+  }
+    #name{
+        width: 90%;
+        height: 30px;
+        left: 10px;
+    }
+  html, body, form, div {
+      background: rgba(0, 0, 0, 0)!important;
+  }
+</style>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <!--<script type="text/javascript">-->
+        <!--window.$ = window.jQuery = require('jquery'); // not sure if you need this at all-->
+        <!--window.Bootstrap = require('bootstrap');-->
+    <!--</script>-->
+    <script src="bower_components/angular/angular.min.js"></script>
+<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" type="text/css"/>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="app/app.js"></script>
+<script type="text/javascript">
+//    document.getElementById("name").focus()
+function add_linener(el, win) {
+     el.addEventListener('mouseleave', () => {
+        win.setIgnoreMouseEvents(true, { forward: true })
+    })
+    el.addEventListener('mouseenter', () => {
+        win.setIgnoreMouseEvents(false)
+    })
+}
+//$(document).ready(function () {
+//   let win  = require('electron').remote.getCurrentWindow()
+//    let el = document.getElementById("name")
+//    add_linener(el, win)
+////    add_linener(document.getElementById("hidden_list"), win)
+//})
+window.onload = function () {
+    let win = require('electron').remote.getCurrentWindow()
+    let el = document.getElementById("name")
+    el.addEventListener('mouseleave', () => {
+        win.setIgnoreMouseEvents(true, { forward: true })
+    })
+    el.addEventListener('mouseenter', () => {
+        win.setIgnoreMouseEvents(false)
+    })
+
+    let el_list = document.getElementById("hidden_list")
+    el_list.addEventListener('mouseleave', ()=>{
+        win.setIgnoreMouseEvents(true, {forward: true})
+    })
+    el_list.addEventListener('mouseenter',()=>{
+        win.setIgnoreMouseEvents(false)
+    })
+}
+
+</script>
+
+</head>
+
+<!--<script src="bower_components/"-->
+<body>
+<form role="form-inline" onsubmit="return false">
+    <div class="form-group" ng-app="myApp" ng-controller="myCtrl">
+        <input id="name" class="form-control" placeholder="输入文件位置" autofocus="autofocus" ng-change="changeKeyValue(textValue)" ng-model="textValue" value="{{textValue}}" ng-click="test()"></input>
+        <div id="hidden_list1" ng-hide="hide">
+            <select id="hidden_list" ng-change="change(x)" ng-model="x" multiple>
+                <option class="list-group-item" ng-repeat="data in datas">{{data}}</option>
+            </select>
+        </div>
+    </div>
+</form>
+</body>
