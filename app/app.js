@@ -2,9 +2,9 @@
  * Created by lxl on 2019/3/3.
  */
 var app = angular.module("myApp",[]);
-app.controller("myCtrl", function ($scope) {
+app.controller("myCtrl", function ($scope, AppService) {
     //初始化一些数据
-    $scope.datas = ["key4","xyz","key3","xxxx","key2","value2","key1","value1"];  //下拉框中的数据
+    $scope.datas = [];  //下拉框中的数据
     $scope.copyDatas = $scope.datas;   //下拉框中的数值拷贝一份
     $scope.hide = true; //显示隐藏下拉框
     $scope.textValue = "";  //文本框数值
@@ -18,12 +18,24 @@ app.controller("myCtrl", function ($scope) {
     //获取的数据值与下拉选逐个比较，如果包含则放在临时变量副本，并用临时变量副本替换下拉选原先的数值，如果数据为空或找不到，就用初始下拉选项副本替换
     $scope.changeKeyValue = function (v) {
         var newData = [];  //创建一个临时下拉框副本
-        angular.forEach($scope.datas, function (data, index, array) {
+
+        // angular.forEach($scope.datas, function (data, index, array) {
+        //     //如果
+        //     if (data.indexOf(v)>=0){
+        //         newData.unshift(data);
+        //     }
+        // });
+        if (v.indexOf("run") == 0 && v.length <= 4){
+           newData = AppService.run_commends()
+        }else{
+         angular.forEach($scope.datas, function (data, index, array) {
             //如果
-            if (data.indexOf(v)>=0){
+             v_tmp = v.slice(4)
+            if (data.indexOf(v_tmp)>=0){
                 newData.unshift(data);
             }
         });
+        }
         $scope.datas = newData; //newData中的数值赋值给$scope.datas
         $scope.hide = false;   //文本框显示
 
@@ -39,6 +51,17 @@ app.controller("myCtrl", function ($scope) {
             $scope.hide = false;
         }
     };
+
+    $scope.enterEvent = function(e){
+        var keycode = window.event?e.keyCode:e.which;
+        if (keycode == 13) {
+            // $scope.textValue = AppService.test()
+            AppService.send_action("run test")
+            AppService.send_action("disappear")
+        }else if (keycode==9){
+            $scope.x.selected = $scope.datas[0]
+        }
+    }
 
     console.log($scope.datas.length);
 })

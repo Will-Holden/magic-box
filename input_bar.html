@@ -7,6 +7,7 @@
   [role=form-inline] .form-group{
       height:100%;
       width: 80%;
+      overflow-y:hidden;
   }
     #name{
         width: 90%;
@@ -15,7 +16,11 @@
     }
   html, body, form, div {
       background: rgba(0, 0, 0, 0)!important;
+      overflow-y:hidden;
   }
+        #hidden_list1{
+            overflow-y:hidden;
+        }
 </style>
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <!--<script type="text/javascript">-->
@@ -26,22 +31,8 @@
 <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" type="text/css"/>
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="app/app.js"></script>
+    <script src="app/AppService.js"></script>
 <script type="text/javascript">
-//    document.getElementById("name").focus()
-function add_linener(el, win) {
-     el.addEventListener('mouseleave', () => {
-        win.setIgnoreMouseEvents(true, { forward: true })
-    })
-    el.addEventListener('mouseenter', () => {
-        win.setIgnoreMouseEvents(false)
-    })
-}
-//$(document).ready(function () {
-//   let win  = require('electron').remote.getCurrentWindow()
-//    let el = document.getElementById("name")
-//    add_linener(el, win)
-////    add_linener(document.getElementById("hidden_list"), win)
-//})
 window.onload = function () {
     let win = require('electron').remote.getCurrentWindow()
     let el = document.getElementById("name")
@@ -69,9 +60,9 @@ window.onload = function () {
 <body>
 <form role="form-inline" onsubmit="return false">
     <div class="form-group" ng-app="myApp" ng-controller="myCtrl">
-        <input id="name" class="form-control" placeholder="输入文件位置" autofocus="autofocus" ng-change="changeKeyValue(textValue)" ng-model="textValue" value="{{textValue}}" ng-click="test()"></input>
+        <input id="name" class="form-control" placeholder="输入文件位置" autofocus="autofocus" ng-change="changeKeyValue(textValue)" ng-model="textValue" value="{{textValue}}" ng-click="test()" ng-keydown="enterEvent($event)"></input>
         <div id="hidden_list1" ng-hide="hide">
-            <select id="hidden_list" ng-change="change(x)" ng-model="x" multiple>
+            <select class="list-group" id="hidden_list" ng-change="change(x)" ng-model="x" multiple>
                 <option class="list-group-item" ng-repeat="data in datas">{{data}}</option>
             </select>
         </div>
